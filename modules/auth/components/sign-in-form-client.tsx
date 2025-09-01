@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +11,14 @@ import {
 import { Chrome, Github } from "lucide-react";
 import { signIn } from "@/auth";
 
-async function handleGoogleSignIn(){
-"use server"
-await signIn("google")
+async function handleGoogleSignIn() {
+  "use server";
+  await signIn("google");
 }
 
-async function handleGithubSignIn(){
-"use server"
-await signIn("github")
+async function handleGithubSignIn() {
+  "use server";
+  await signIn("github");
 }
 
 const SignInFormClient = () => {
@@ -67,5 +66,3 @@ const SignInFormClient = () => {
 };
 
 export default SignInFormClient;
-
-
