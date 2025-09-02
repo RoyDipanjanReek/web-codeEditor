@@ -8,10 +8,33 @@ import Image from "next/image"
 import { useRouter } from "next/navigation";
 import { useState } from "react"
 import { toast } from "sonner";
+import TemplateSelectingModel from "./templateSelectingModel";
+import TemplateSelectionModal from "./templateSelectingModel";
+import { createPlayground } from "../actions";
 
 const AddNewButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<{
+    title: string;
+    
+  } | null>(null)
 
+  const router = useRouter()
+
+  const handleSubmit = async (data: {
+    title: string,
+    template: "REACT" | "NEXTJS" | "EXPRESS" | "VUE" | "HONO" | "ANGULAR"
+    description?: string 
+  }) => {
+    setSelectedTemplate(data)
+    const res = await createPlayground(data)
+
+    toast.success("Playgound created successfully")
+    setIsModalOpen(false)
+
+    router.push(`/playground${res?.id}`)
+
+  }
   return (
     <>
       <div
@@ -46,6 +69,13 @@ const AddNewButton = () => {
           />
         </div>
       </div>
+
+      <TemplateSelectionModal 
+      isOpen = {isModalOpen}
+      onClose = {()=>setIsModalOpen(false)}
+      onSubmit={handleSubmit}
+
+      />
     </>
   )
 }
